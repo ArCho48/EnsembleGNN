@@ -43,7 +43,7 @@ def main():
 
         if not (energies_dir.exists() and geometries_dir.exists()):
             raise RuntimeError("After extraction, expected 'energies/' and 'geometries/' were not found.")
-    pdb.set_trace()
+
     # Use the extracted folder as the dataset root
     dataset = MoleculeBondGraphDataset(root=str(data_root), covalent_scale=1.2)
 
