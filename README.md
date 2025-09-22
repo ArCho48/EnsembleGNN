@@ -109,7 +109,7 @@ It supports three main operations:
 
 Please cite \[[1](#citation)] in your work when using this library in your experiments.
 
-### 1) Comparison with SOTA (nested CV → summary & evaluate)
+<!-- ### 1) Comparison with SOTA (nested CV → summary & evaluate)
 
 ```bash
 # Nested CV (inner HPO per fold, outer evaluation)
@@ -159,7 +159,7 @@ python ensemble_tmqm.py \
   --model_name SAGE \
   --top_k 100 --device cuda \
   --save_csv tmqm_top100_preds.csv --skip_missing
-```
+``` -->
 
 ## Feedback
 
