@@ -28,14 +28,21 @@ It supports three main operations:
 
 ## Structure
 
-* **data loading & utilities**
+* **Data preparation
+    * `dataset.py` — **MoleculeBondGraphDataset** builds PyG graphs from `.xyz` files under `geometries/<name>/`, attaches node/edge features, and pairs them with targets from `energies/<name>.csv`. Writes a single `<root>/data.pt` compatible with `InMemoryDataset`.
+    * `main.py` — helper script to extract `dataset/dataset.tar.gz`, verify `energies/` and `geometries/` are present, and instantiate `MoleculeBondGraphDataset` for preprocessing. Includes a safe tar extraction routine.
+    * `tmqm_dataset.py` — utilities/CLI to select specific CSD codes from tmQM multi-XYZ files, write per-molecule `.xyz`, and convert them into a saved PyG list (`data.pt`). Also exposes `xyz_to_pyg` and `build_pyg_dataset_from_dir`.
+    * `utils.py` — chemistry utilities: normalized atom features (`Zn`, `Rcn`, `wn`, `chin`), RAC-155 feature computation (153 used; metadata removed), and molecule name normalization helpers.
+
+
+* **Data loading & utilities**
 
   * `dataloader.py` — load PyG `Data` lists from a `.pt` file or a directory of `*.pt`; optional pickle loaders; mini-batch loaders; optional pre-serialized ML features for non-GNN baselines.
   * `hp_problem.py` — defines search spaces for ML and GNN models (Deephyper `HpProblem`).
   * `models.py` — GNNs (GCN, SAGE, GAT, GIN, GINE, PNA, Transformer, DimeNet, SchNet) and ML baselines (MLP, RF/ET, SVM, XGB).
   * `evaluation.py` — regression metrics + parity plots with a 95% CI band.
 
-* **1) Comparison with SOTA**
+* **Comparison with SOTA**
 
   * `train_nestedCV.py` — repeated nested CV: inner HPO per fold (Deephyper), outer re-train, metrics in original units, parity plots per fold; saves JSON results for each method.
     **CLI:**
@@ -59,7 +66,7 @@ It supports three main operations:
       --save_json --output_dir OUT_DIR
     ```
 
-* **2) Ensemble (HPO + ensembling)**
+* **Ensemble (HPO + ensembling)**
 
   * `hp_search.py` — single 0.8/0.1/0.1 split, saves **every** trained trial (weights + scalers) and the search ledger (`search_history.csv`, `trials.json`, `best_summary.json`) under `hpo_single_no_retrain/<MODEL>/`.
     **CLI:**
@@ -85,7 +92,7 @@ It supports three main operations:
       --device cpu
     ```
 
-* **3) TMQM predictions and UQ**
+* **TMQM predictions and UQ**
 
   * `ensemble_tmqm.py` — Top-K ensemble *inference* on tmQM PyG graphs (no ground truth needed). Outputs CSV with `mean` and `std` (epistemic).
     **CLI:**
