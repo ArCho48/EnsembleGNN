@@ -28,7 +28,7 @@ It supports three main operations:
 
 ## Structure
 
-* **Data preparation
+* **Data preparation**
     * `dataset.py` — **MoleculeBondGraphDataset** builds PyG graphs from `.xyz` files under `geometries/<name>/`, attaches node/edge features, and pairs them with targets from `energies/<name>.csv`. Writes a single `<root>/data.pt` compatible with `InMemoryDataset`.
     * `main.py` — helper script to extract `dataset/dataset.tar.gz`, verify `energies/` and `geometries/` are present, and instantiate `MoleculeBondGraphDataset` for preprocessing. Includes a safe tar extraction routine.
     * `tmqm_dataset.py` — utilities/CLI to select specific CSD codes from tmQM multi-XYZ files, write per-molecule `.xyz`, and convert them into a saved PyG list (`data.pt`). Also exposes `xyz_to_pyg` and `build_pyg_dataset_from_dir`.
